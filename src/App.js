@@ -13,6 +13,7 @@ import Notice from "page/notice/Notice";
 import SignIn from "page/member/SignIn";
 import SignUp from "page/member/SignUp";
 import Profile from "page/setting/Profile";
+import SignOut from "page/member/SignOut";
 
 function App() {
   /*---------- return ----------*/
@@ -25,6 +26,7 @@ function App() {
         <Route path="notice" element={<Notice />} />
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
+        <Route path="signout" element={<SignOut />} />
         <Route path="profile" element={<Profile />} />
       </Routes>
     </div>

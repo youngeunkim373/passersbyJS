@@ -19,6 +19,8 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 //style
 import "../style/home.css";
+//context
+import AuthContext from "context/AuthProvider";
 
 const Icons = ({ text }) => {
   switch (text) {
@@ -50,6 +52,9 @@ const IconMenu = ({ menu, activeStyle }) => {
     top: false,
     right: false,
   });
+
+  /*---------- 로그인 세션 관리 ----------*/
+  const { auth, setAuth } = useContext(AuthContext);
 
   /*---------- drawer ----------*/
   const toggleDrawer = (anchor, open) => (event) => {
@@ -136,7 +141,7 @@ const IconMenu = ({ menu, activeStyle }) => {
             : // list("top", ["프로필/profile", "설정/settings"])
             textMenu === "total"
             ? list("right", [
-                "로그인/signin",
+                auth === null ? "로그인/signin" : "로그아웃/signout",
                 "회원가입/signup",
                 "공지사항/notice",
                 "게시판/board",

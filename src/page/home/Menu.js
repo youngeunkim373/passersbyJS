@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 //context
@@ -6,8 +6,13 @@ import TextMenu from "./component/TextMenu";
 import IconMenu from "./component/IconMenu";
 //style
 import "./style/home.css";
+//context
+import AuthContext from "context/AuthProvider";
 
 export default function Menu() {
+  /*---------- 로그인 세션 관리 ----------*/
+  const { auth, setAuth } = useContext(AuthContext);
+
   /*---------- 반응형 css ----------*/
   const matches = useMediaQuery("(max-width:1250px)");
 
@@ -52,7 +57,11 @@ export default function Menu() {
           </div>
           <div className="right  vertical-center loc-setting-width">
             <div className="left PR30">
-              {["로그인/signin", "|/", "회원가입/signup"].map((textMenu) => (
+              {[
+                auth === null ? "로그인/signin" : "로그아웃/signout",
+                "|/",
+                "회원가입/signup",
+              ].map((textMenu) => (
                 <TextMenu
                   key={textMenu}
                   menu={textMenu}
