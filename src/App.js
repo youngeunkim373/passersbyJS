@@ -1,27 +1,46 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+//page
+import Home from "page/home/Home";
+import Menu from "page/home/Menu";
+//style
+import "global/style/font.css";
+import "global/style/global.css";
+import "global/style/lightTheme.css";
+//page
+import Board from "page/board/Board";
+import Notice from "page/notice/Notice";
+import SignIn from "page/member/SignIn";
+import SignUp from "page/member/SignUp";
+import Profile from "page/setting/Profile";
 
 function App() {
-  const [dbTest, setDbTest] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      await axios
-        .get(`http://localhost:4000/test`, {})
-        .then((res) => {
-          console.log(res.data);
-          setDbTest(res.data[0].list_no);
-        })
-        .catch((error) => console.log(error.response));
-    }
-    fetchData();
-  }, []);
-
+  /*---------- return ----------*/
   return (
-    <div className="App">
-      {dbTest}
+    <div>
+      <Menu />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="board" element={<Board />} />
+        <Route path="notice" element={<Notice />} />
+        <Route path="signin" element={<SignIn />} />
+        <Route path="signup" element={<SignUp />} />
+        <Route path="profile" element={<Profile />} />
+      </Routes>
     </div>
   );
 }
 
 export default App;
+
+//페이지가 없는 링크를 호출할 때
+function NoMatch() {
+  return (
+    <div>
+      <h2>Nothing to see here!</h2>
+      <p>
+        <Link to="/">Go to the homepage</Link>
+      </p>
+    </div>
+  );
+}

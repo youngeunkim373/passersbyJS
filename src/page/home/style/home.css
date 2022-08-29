@@ -1,0 +1,43 @@
+/* --------------------------------------------------- */
+/*  Menu.js                                            */
+/* --------------------------------------------------- */
+.loc-menu-height {
+  height: 70px;
+}
+
+.loc-img-size {
+  width: 70px;
+}
+
+.loc-img-width {
+  width: 20vw;
+  min-width: 250px;
+}
+
+.loc-menu-width {
+  width: 60vw;
+  min-width: 700px;
+}
+
+.loc-setting-width {
+  width: 20vw;
+  min-width: 350px;
+}
+
+.loc-menu-font {
+  font-family: "ibmRegular";
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.loc-setting-font {
+  font-family: "ibmLight";
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.loc-icon-right {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}

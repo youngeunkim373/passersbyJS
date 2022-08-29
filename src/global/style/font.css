@@ -1,0 +1,37 @@
+@font-face {
+  font-family: "sanjuGotgam";
+  src: url("../../../public/static/font/SANGJU Gotgam.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ibmMedium";
+  src: url("../../../public/static/font/IBMPlexSansKR-Medium.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ibmLight";
+  src: url("../../../public/static/font/IBMPlexSansKR-Light.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ibmRegular";
+  src: url("../../../public/static/font/IBMPlexSansKR-Regular.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "twayAir";
+  src: url("../../../public/static/font/tway_air.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
