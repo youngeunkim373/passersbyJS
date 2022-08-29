@@ -21,6 +21,7 @@ app.listen(PORT, () => {
 //   res.send({ username: os.userInfo().username });
 // });
 
+//데이터 타입 설정
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
@@ -28,6 +29,21 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 app.get("/test", async (req, res) => {
-      res.send("DB연결 성공!");
+    //sql
+    let sql = `
+    SELECT  list_no
+      FROM board_list A
+     WHERE 1 = 1
+  `;
+
+    dbConfig.query(sql, (err, data) => {
+      if (err) {
+        console.log(err.message);
+        console.log(`sql: ${sql}`);
+        return;
+      }
+      console.log(data);
+      res.send(data);
+    });
   });
 

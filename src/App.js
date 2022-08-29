@@ -10,7 +10,7 @@ function App() {
         .get(`http://localhost:4000/test`, {})
         .then((res) => {
           console.log(res.data);
-          setDbTest(res.data);
+          setDbTest(res.data[0].list_no);
         })
         .catch((error) => console.log(error.response));
     }
