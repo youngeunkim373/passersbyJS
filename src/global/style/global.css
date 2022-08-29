@@ -340,6 +340,9 @@ footer {
 }
 
 .profile-img {
+  position: relative;
+  z-index: 1;
+  background-color: #ffe8f5;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-position: center;

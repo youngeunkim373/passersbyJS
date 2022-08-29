@@ -45,6 +45,16 @@ const transporter = nodemailer.createTransport({
 /* --------------------------------------------------- */
 /*  페이지별 서버                                       */
 /* --------------------------------------------------- */
+const board = require("./page/serverBoard")(
+  app,
+  dbConfig,
+  multer,
+  bodyparser,
+  express,
+  fs
+);
+app.use("/board", board);
+
 const member = require("./page/serverMember")(
   app,
   dbConfig,
