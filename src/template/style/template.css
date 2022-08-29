@@ -13,3 +13,68 @@
 .BasicInput:focus {
   border: 1px solid #9000ff;
 }
+
+/* --------------------------------------------------- */
+/*  BasicButton.js                                     */
+/* --------------------------------------------------- */
+.BasicButton {
+  border: 1px solid #9000ff;
+  border-radius: 20px;
+  margin: 0px 10px;
+  color: #9000ff;
+  background-color: white;
+}
+
+.BasicButton:hover {
+  color: white;
+  background-color: #9000ff;
+}
+
+/* --------------------------------------------------- */
+/*  SelectBox.js                                       */
+/* --------------------------------------------------- */
+.SelectBox-div {
+  position: relative;
+  min-width: 100px;
+  background-color: transparent;
+  align-self: center;
+  cursor: pointer;
+}
+
+.SelectBox-div::before {
+  content: "⌵";
+  position: absolute;
+  top: -4px;
+  right: 8px;
+  color: #9000ff;
+  font-size: 20px;
+}
+
+.SelectBox-label {
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+.SelectBox-ul {
+  position: absolute;
+  list-style: none;
+  top: 18px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  padding: 5px;
+  border-radius: 8px;
+  background-color: #fffaff;
+  color: #101820;
+  z-index: 1;
+}
+
+.SelectBox-li {
+  font-size: 16px;
+  padding: 6px 8px;
+  transition: background-color 0.1s ease-in;
+}
+
+.SelectBox-li:hover {
+  background-color: #ffe8f5;
+}

@@ -7,6 +7,7 @@ const mysql = require("mysql");
 const path = require("path");
 const os = require("os");
 const dbConfig = require("./dbConfig");
+const nodemailer = require("nodemailer");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -28,6 +29,19 @@ app.use(bodyparser.urlencoded({ extended: true }));
 //클라이언트에서 withCredentials가 true로 설정되어 있으면 origin 값을 명확히 명시해야 함
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
+// 메일발송 함수
+const transporter = nodemailer.createTransport({
+  service: "gmail", //사용하고자 하는 서비스
+  prot: 587,
+  host: "smtp.gmlail.com",
+  secure: false,
+  requireTLS: true,
+  auth: {
+    user: "youngeunkim373@gmail.com", //gmail주소입력
+    pass: "wcfvlmyolmphbmnx", //gmail패스워드 입력
+  },
+});
+
 /* --------------------------------------------------- */
 /*  페이지별 서버                                       */
 /* --------------------------------------------------- */
@@ -36,6 +50,7 @@ const member = require("./page/serverMember")(
   dbConfig,
   multer,
   bodyparser,
-  express
+  express,
+  transporter
 );
 app.use("/member", member);
