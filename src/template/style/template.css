@@ -1,0 +1,15 @@
+/* --------------------------------------------------- */
+/*  BasicInput.js                                      */
+/* --------------------------------------------------- */
+.BasicInput {
+  font-family: "ibmLight";
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+}
+
+.BasicInput:focus {
+  border: 1px solid #9000ff;
+}

@@ -1,0 +1,15 @@
+/* --------------------------------------------------- */
+/*  SignIn.js                                          */
+/* --------------------------------------------------- */
+.loc-label {
+  width: 130px;
+  color: #9000ff;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.loc-ptag {
+  width: 100%;
+  font-size: 15px;
+  padding-left: 10px;
+}

@@ -28,22 +28,14 @@ app.use(bodyparser.urlencoded({ extended: true }));
 //클라이언트에서 withCredentials가 true로 설정되어 있으면 origin 값을 명확히 명시해야 함
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
-app.get("/test", async (req, res) => {
-    //sql
-    let sql = `
-    SELECT  list_no
-      FROM board_list A
-     WHERE 1 = 1
-  `;
-
-    dbConfig.query(sql, (err, data) => {
-      if (err) {
-        console.log(err.message);
-        console.log(`sql: ${sql}`);
-        return;
-      }
-      console.log(data);
-      res.send(data);
-    });
-  });
-
+/* --------------------------------------------------- */
+/*  페이지별 서버                                       */
+/* --------------------------------------------------- */
+const member = require("./page/serverMember")(
+  app,
+  dbConfig,
+  multer,
+  bodyparser,
+  express
+);
+app.use("/member", member);
