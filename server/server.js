@@ -68,6 +68,16 @@ const member = require("./page/serverMember")(
 );
 app.use("/member", member);
 
+const setting = require("./page/serverSetting")(
+  app,
+  dbConfig,
+  multer,
+  bodyparser,
+  express,
+  fs
+);
+app.use("/setting", setting);
+
 const etc = require("./page/serverEtc")(
   app,
   dbConfig,
