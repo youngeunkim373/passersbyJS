@@ -91,6 +91,94 @@ const MyProfile = () => {
     setProfile({ ...profile, [name]: value });
   };
 
+  /*---------- 프로필 이미지 변경 ----------*/
+  const onFileChange = (e) => {
+    e.preventDefault();
+
+    const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    if (korean.test(e.target.value.split("\\")[2])) {
+      setAlert({
+        open: true,
+        text: "한글명 파일은 사용할 수 없습니다.",
+      });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("email", profile.email);
+    formData.append("image", encodeURIComponent(e.target.value.split("\\")[2]));
+    // if (document.profileForm.image.files.length !== 0) {
+    formData.append("file", e.target.files[0]);
+    // }
+
+    const config = {
+      headers: { "Content-Type": "multipart/form-data" },
+      withCredentials: true,
+    };
+    axios
+      .put(
+        "http://localhost:4000/setting/profile/myprofile/image",
+        formData,
+        config
+      )
+      .then((res) => {
+        setProfile((prev) => ({
+          ...prev,
+          image: res.data,
+        }));
+        sessionStorage.setItem("loginImage", res.data);
+      });
+  };
+
+  /*---------- 프로필 회원정보 변경 ----------*/
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log(
+    //   `email: ${email} / nicknm: ${nicknm} / age: ${age} / sex: ${sex} / region: ${region}`
+    // );
+
+    //빈칸 방지
+    for (var el in profile) {
+      // console.log(profile[el]);
+      if (profile[el] === "") {
+        setAlert({
+          open: true,
+          text: `${koreanProfile[el]}란을 입력해주세요.`,
+        });
+        return;
+      }
+    }
+
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
+
+    axios
+      .put(
+        "http://localhost:4000/setting/profile/myprofile/update",
+        JSON.stringify({ email, nicknm, sex, region, initNicknm }),
+        config
+      )
+      .then((res) => {
+        // console.log(res.data);
+        // 닉네임 중복 여부 받기
+        if (res.data[0].NickNmDup > 0 && initNicknm !== nicknm) {
+          setAlert({
+            open: true,
+            text: "이미 존재하는 닉네임입니다.",
+          });
+          return;
+        }
+
+        setAlert({
+          open: true,
+          text: "회원정보 변경이 완료되었습니다",
+        });
+        setInitNicknm(nicknm);
+      });
+  };
+
   /*---------- useEffect ----------*/
   // select 태그 처리
   useEffect(() => {
@@ -111,7 +199,6 @@ const MyProfile = () => {
         await axios
           .get(`http://localhost:4000/setting/profile/myprofile/${email}`, {})
           .then((res) => {
-            console.log(res.data[0]);
             setProfile({
               email: res.data[0].email,
               nicknm: res.data[0].nicknm,
@@ -147,6 +234,7 @@ const MyProfile = () => {
     <form
       id="profileForm"
       encType="multi part/form-data"
+      onSubmit={handleSubmit}
       method="put"
       acceptCharset="UTF-8"
     >
@@ -168,6 +256,7 @@ const MyProfile = () => {
               type="file"
               name="image"
               file={profile.image}
+              onChange={onFileChange}
             />
             <label htmlFor="imageUpload">
               <SettingsIcon
