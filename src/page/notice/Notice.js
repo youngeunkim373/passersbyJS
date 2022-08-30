@@ -52,7 +52,9 @@ const Notice = () => {
         .get("http://localhost:4000/notice/page", {})
         .then((res) => {
           //console.log(`res.data.pageCnt: ${res.data[0].pageCnt}`);
-          setPageCnt(res.data[0].pageCnt);
+          if (res.data[0].pageCnt > 0) {
+            setPageCnt(res.data[0].pageCnt);
+          }
         })
         .catch((error) => console.log(error.response));
     }

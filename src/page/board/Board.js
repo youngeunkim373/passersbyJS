@@ -83,7 +83,9 @@ export default function Board(props) {
         })
         .then((res) => {
           // console.log(`pageCnt: ${res.data[0].pageCnt}`);
-          setPageCnt(res.data[0].pageCnt);
+          if (res.data[0].pageCnt > 0) {
+            setPageCnt(res.data[0].pageCnt);
+          }
         })
         .catch((error) => console.log(error.response));
     }
