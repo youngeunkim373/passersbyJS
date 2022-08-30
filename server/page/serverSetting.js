@@ -169,5 +169,167 @@ module.exports = (app, dbConfig, multer, bodyparser, express, fs) => {
     });
   });
 
+  /* --------------------------------------------------- */
+  /*  내 질문 조회                                       */
+  /* --------------------------------------------------- */
+  //내 질문 데이터 출력
+  router.get("/profile/myboard/question", async (req, res) => {
+    //params
+    const email = req.query.email;
+    const search = req.query.search;
+    const page = parseInt(req.query.page);
+    // console.log(`params: ${email} / ${search} /${page}`);
+
+    const rowCnt = 5;
+    const curPage = rowCnt * (page - 1);
+    // console.log(`curPage: ${curPage}`);
+
+    //sql
+    let sql = `
+    SELECT  *
+           ,TIMESTAMPDIFF(minute, DATE_FORMAT(CONCAT(A.reg_date, ' ', A.reg_time), '%Y-%m-%d %H:%i'), DATE_FORMAT(CONCAT(CURDATE(),' ',CURTIME()), '%Y-%m-%d %H:%i')) AS timediff
+           ,(SELECT user_img      FROM members  /* 회원관리 */
+              WHERE 1 = 1
+                AND user_email = A.reg_id)     AS user_img
+     FROM board_list A
+    WHERE 1 = 1
+      AND A.reg_id = '${email}'
+  `;
+    if (search !== "") {
+      sql += `
+    AND (A.list_title LIKE '%${search}%' OR A.list_ctnt LIKE '%${search}%')
+    `;
+    }
+    sql += `
+    ORDER BY reg_date DESC, reg_time DESC
+    LIMIT ${curPage}, ${rowCnt}
+  `;
+
+    dbConfig.query(sql, (err, data) => {
+      if (err) {
+        console.log(err.message);
+        console.log(`sql: ${sql}`);
+        return;
+      }
+
+      res.send(data);
+    });
+  });
+
+  //내 질문 페이지 출력
+  router.get("/profile/myboard/question/page", async (req, res) => {
+    //params
+    const email = req.query.email;
+    const search = req.query.search;
+    //sql
+    let sql = `
+    SELECT IF(MOD(COUNT(*), 5) = 0
+              ,COUNT(*) DIV 5  
+              ,COUNT(*) DIV 5   +1
+           )        AS pageCnt
+     FROM board_list A
+    WHERE 1 = 1
+      AND A.reg_id = '${email}'
+  `;
+    if (search !== "") {
+      sql += `
+    AND A.list_title LIKE '%${search}%'
+    `;
+    }
+
+    dbConfig.query(sql, (err, data) => {
+      if (err) {
+        console.log(err.message);
+        console.log(`sql: ${sql}`);
+        return;
+      }
+
+      res.send(data);
+    });
+  });
+
+  /* --------------------------------------------------- */
+  /*  내 답변 조회                                       */
+  /* --------------------------------------------------- */
+  //내 답변 데이터 출력
+  router.get("/profile/myboard/answer", async (req, res) => {
+    //params
+    const email = req.query.email;
+    const search = req.query.search;
+    const page = parseInt(req.query.page);
+    // console.log(`params: ${email} / ${search} /${page}`);
+
+    const rowCnt = 5;
+    const curPage = rowCnt * (page - 1);
+    // console.log(`curPage: ${curPage}`);
+
+    //sql
+    let sql = `
+    SELECT  *
+           ,TIMESTAMPDIFF(minute, DATE_FORMAT(CONCAT(A.reg_date, ' ', A.reg_time), '%Y-%m-%d %H:%i'), DATE_FORMAT(CONCAT(CURDATE(),' ',CURTIME()), '%Y-%m-%d %H:%i')) AS timediff
+           ,(SELECT user_img      FROM members  /* 회원관리 */
+              WHERE 1 = 1
+                AND user_email = A.reg_id)     AS user_img           
+     FROM board_list A
+     LEFT OUTER JOIN board_answer_log B
+             ON B.list_no = A.list_no
+    WHERE 1 = 1
+      AND B.reg_id = '${email}'
+  `;
+    if (search !== "") {
+      sql += `
+    AND (A.list_title LIKE '%${search}%' OR A.list_ctnt LIKE '%${search}%')
+    `;
+    }
+    sql += `
+    ORDER BY A.reg_date DESC, A.reg_time DESC
+    LIMIT ${curPage}, ${rowCnt}
+  `;
+
+    dbConfig.query(sql, (err, data) => {
+      if (err) {
+        console.log(err.message);
+        console.log(`sql: ${sql}`);
+        return;
+      }
+
+      res.send(data);
+    });
+  });
+
+  //내 답변 페이지 출력
+  router.get("/profile/myboard/answer/page", async (req, res) => {
+    //params
+    const email = req.query.email;
+    const search = req.query.search;
+    //sql
+    let sql = `
+    SELECT IF(MOD(COUNT(*), 5) = 0
+              ,COUNT(*) DIV 5  
+              ,COUNT(*) DIV 5   +1
+           )        AS pageCnt
+     FROM board_list A
+     LEFT OUTER JOIN board_answer_log B
+             ON B.list_no = A.list_no
+    WHERE 1 = 1
+      AND B.reg_id = '${email}'
+  `;
+    if (search !== "") {
+      sql += `
+    AND A.list_title LIKE '%${search}%'
+    `;
+    }
+
+    dbConfig.query(sql, (err, data) => {
+      if (err) {
+        console.log(err.message);
+        console.log(`sql: ${sql}`);
+        return;
+      }
+
+      res.send(data);
+    });
+  });
+
   return router;
 };
