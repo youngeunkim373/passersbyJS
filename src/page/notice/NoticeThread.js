@@ -105,8 +105,15 @@ const NoticeThread = () => {
       return;
     }
 
-    // addComment
-    // console.log(cmntInput);
+    //빈칸 방지
+    if (cmntInput.value === "") {
+      setAlert({
+        open: true,
+        text: `댓글을 입력해주세요.`,
+      });
+      return;
+    }
+
     axios
       .post(
         "http://localhost:4000/notice/thread/cmnt",
@@ -263,7 +270,12 @@ const NoticeThread = () => {
             {cmnt.map((el, idx) =>
               el.nested_cmnt_seq === 0 ? (
                 <div key={idx}>
-                  <Comment data={el} no={no} fetchData={fetchData02} />
+                  <Comment
+                    data={el}
+                    no={no}
+                    fetchData={fetchData02}
+                    url="http://localhost:4000/notice/thread/cmnt"
+                  />
                   <Divider />
                 </div>
               ) : (

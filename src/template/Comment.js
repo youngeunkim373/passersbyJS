@@ -17,7 +17,7 @@ import * as AL from "global/util/autoLink";
 //style
 import "./style/template.css";
 
-const Comment = ({ no, data, fetchData }) => {
+const Comment = ({ no, data, fetchData, url }) => {
   /*---------- set 함수 ----------*/
   //댓글입력
   const [cmntInput, setCmntInput] = useState({
@@ -55,12 +55,17 @@ const Comment = ({ no, data, fetchData }) => {
       return;
     }
 
+    //빈칸 방지
+    if (cmntInput.value === "") {
+      setAlert({
+        open: true,
+        text: `댓글을 입력해주세요.`,
+      });
+      return;
+    }
+
     axios
-      .post(
-        "http://localhost:4000/board/thread/cmnt",
-        JSON.stringify({ no, cmntInput, email }),
-        config
-      )
+      .post(url, JSON.stringify({ no, cmntInput, email }), config)
       .then((res) => {
         // console.log(res.data);
         setCmntInput({ name: "", value: "", id: "" });

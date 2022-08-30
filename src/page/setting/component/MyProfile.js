@@ -115,6 +115,7 @@ const MyProfile = () => {
       headers: { "Content-Type": "multipart/form-data" },
       withCredentials: true,
     };
+
     axios
       .put(
         "http://localhost:4000/setting/profile/myprofile/image",

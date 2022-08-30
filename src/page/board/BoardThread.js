@@ -154,6 +154,15 @@ const BoardThread = () => {
       return;
     }
 
+    //빈칸 방지
+    if (cmntInput.value === "") {
+      setAlert({
+        open: true,
+        text: `댓글을 입력해주세요.`,
+      });
+      return;
+    }
+
     axios
       .post(
         "http://localhost:4000/board/thread/cmnt",
@@ -327,6 +336,7 @@ const BoardThread = () => {
                     data={el}
                     onCmntChange={onCmntChange}
                     fetchData={fetchData02}
+                    url="http://localhost:4000/board/thread/cmnt"
                   />
                   <Divider />
                 </div>

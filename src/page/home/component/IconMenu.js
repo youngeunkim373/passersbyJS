@@ -145,6 +145,7 @@ const IconMenu = ({ menu, activeStyle }) => {
                 "회원가입/signup",
                 "공지사항/notice",
                 "게시판/board",
+                "프로필/profile",
               ])
             : list("top", [])}
         </Drawer>
