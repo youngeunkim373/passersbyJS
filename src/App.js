@@ -19,6 +19,7 @@ import Profile from "page/setting/Profile";
 import BoardWrite from "page/board/BoardWrite";
 //global
 import Layout from "global/component/Layout";
+import NoticeThread from "page/notice/NoticeThread";
 
 function App() {
   /*---------- return ----------*/
@@ -31,6 +32,22 @@ function App() {
           element={
             <Layout>
               <Home />
+            </Layout>
+          }
+        />
+        <Route
+          path="notice"
+          element={
+            <Layout>
+              <Notice />
+            </Layout>
+          }
+        />
+        <Route
+          path="notice/thread/:no"
+          element={
+            <Layout>
+              <NoticeThread />
             </Layout>
           }
         />
@@ -55,14 +72,6 @@ function App() {
           element={
             <Layout>
               <BoardWrite />
-            </Layout>
-          }
-        />
-        <Route
-          path="notice"
-          element={
-            <Layout>
-              <Notice />
             </Layout>
           }
         />
