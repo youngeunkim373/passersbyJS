@@ -1,6 +1,7 @@
 import React from "react";
 
 const ProfileImage = ({ image, width = "55px", height = "55px" }) => {
+  console.log(image);
   return (
     <div
       id="image"
@@ -8,9 +9,10 @@ const ProfileImage = ({ image, width = "55px", height = "55px" }) => {
       style={{
         width: width,
         height: height,
-        backgroundImage: image
-          ? `url("${process.env.PUBLIC_URL}/upload/profileImage/${image}")`
-          : `url("${process.env.PUBLIC_URL}/upload/profileImage/basicProfile.png")`,
+        backgroundImage:
+          image && image !== "null"
+            ? `url("${process.env.PUBLIC_URL}/upload/profileImage/${image}")`
+            : `url("${process.env.PUBLIC_URL}/upload/profileImage/basicProfile.png")`,
       }}
     ></div>
   );

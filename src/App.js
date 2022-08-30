@@ -7,13 +7,15 @@ import Menu from "page/home/Menu";
 import "global/style/font.css";
 import "global/style/global.css";
 import "global/style/lightTheme.css";
+import "react-quill/dist/quill.snow.css";
 //page
-import Board from "page/board/Board";
 import Notice from "page/notice/Notice";
+import Board from "page/board/Board";
+import BoardThread from "page/board/BoardThread";
 import SignIn from "page/member/SignIn";
 import SignUp from "page/member/SignUp";
-import Profile from "page/setting/Profile";
 import SignOut from "page/member/SignOut";
+import Profile from "page/setting/Profile";
 
 function App() {
   /*---------- return ----------*/
@@ -23,6 +25,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="board" element={<Board />} />
+        <Route path="board/thread/:no" element={<BoardThread />} />
         <Route path="notice" element={<Notice />} />
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />

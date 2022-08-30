@@ -1,0 +1,63 @@
+.MultipleDiv {
+  margin-bottom: 10px;
+  font-size: 20px;
+  /* display: inline-block; */
+}
+
+.MultipleDiv em {
+  text-align: center;
+  position: static;
+  padding: 7px;
+  line-height: 50px;
+  color: white;
+  font-style: normal;
+  font-family: "ibmRegular";
+  font-weight: bold;
+  font-size: 20px;
+  background-color: rgba(144, 0, 255, 0.3); /* Theme.themePurple */
+  border-radius: 40px;
+}
+
+.MultipleDiv em:hover {
+  background-color: rgba(144, 0, 255);
+  cursor: pointer;
+}
+
+/* .MultipleDiv strong {
+    text-align: center;
+    padding: 7px;
+    line-height: 50px;
+    color: rgba(144, 0, 255);
+    font-style: normal;
+    font-family: "ibmRegular";
+    font-size: 20px;
+  } */
+
+.quill-container {
+  height: 100%;
+}
+
+.quill-container.isView .ql-toolbar {
+  display: none;
+}
+
+.quill-container.isView .ql-container {
+  border: none;
+}
+
+.editor-height {
+  height: 100%;
+  min-height: 350px;
+}
+
+.ql-editor {
+  height: 350px;
+  overflow: auto;
+  font-family: "ibmLight";
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.quill-container.isView .ql-editor {
+  height: 100%;
+}

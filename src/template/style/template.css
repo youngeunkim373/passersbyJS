@@ -107,3 +107,21 @@
   justify-content: center;
   margin: 5px;
 }
+
+/* --------------------------------------------------- */
+/*  Comment.js                                         */
+/* --------------------------------------------------- */
+.loc-cmnt {
+  width: 90%;
+  line-height: 1;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+.loc-cmnt-width {
+  width: 87%;
+}
+
+.css-6bxxch-MuiPaper-root-MuiAccordion-root:before {
+  display: none;
+}

@@ -2,6 +2,8 @@ import React from "react";
 //MUI
 import Page from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+//style
+import "./style/template.css";
 
 const Pagination = ({ pageCnt, setPage }) => {
   const clickPage = (e, page) => {

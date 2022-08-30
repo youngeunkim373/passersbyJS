@@ -359,3 +359,8 @@ footer {
   border: none;
   background-color: transparent;
 }
+
+/*---------- 조회 ----------*/
+.none {
+  display: none;
+}
