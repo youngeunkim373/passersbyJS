@@ -173,6 +173,22 @@ export default function Board(props) {
       <div className="PT30">
         <Pagination pageCnt={pageCnt} setPage={setPage} />
       </div>
+      <NavLink
+        to="/board/write"
+        onClick={(e) => {
+          if (!sessionStorage.getItem("loginEmail")) {
+            setAlert({
+              open: true,
+              text: "로그인을 먼저 하고 이용해주세요.",
+            });
+            e.preventDefault();
+          }
+        }}
+        className="loc-push-btn"
+        style={activeStyle}
+      >
+        <PushButton name="글쓰기" icon={<CreateIcon />} type="button" />
+      </NavLink>
     </div>
   );
 }

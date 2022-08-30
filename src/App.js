@@ -16,6 +16,7 @@ import SignIn from "page/member/SignIn";
 import SignUp from "page/member/SignUp";
 import SignOut from "page/member/SignOut";
 import Profile from "page/setting/Profile";
+import BoardWrite from "page/board/BoardWrite";
 
 function App() {
   /*---------- return ----------*/
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="board" element={<Board />} />
         <Route path="board/thread/:no" element={<BoardThread />} />
+        <Route path="board/write" element={<BoardWrite />} />
         <Route path="notice" element={<Notice />} />
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />

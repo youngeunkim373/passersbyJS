@@ -64,3 +64,13 @@ const member = require("./page/serverMember")(
   transporter
 );
 app.use("/member", member);
+
+const etc = require("./page/serverEtc")(
+  app,
+  dbConfig,
+  multer,
+  bodyparser,
+  express,
+  fs
+);
+app.use("/etc", etc);

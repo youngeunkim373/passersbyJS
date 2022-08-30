@@ -541,5 +541,176 @@ module.exports = (app, dbConfig, multer, bodyparser, express, fs) => {
     });
   });
 
+  /* --------------------------------------------------- */
+  /*  게시판 게시글 저장                                  */
+  /* --------------------------------------------------- */
+  //첨부파일 처리
+  //https://github.com/expressjs/multer/blob/master/doc/README-ko.md -> multer 이용법
+  router.use("/file/", express.static("../public/upload/board"));
+
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "../public/upload/board");
+    },
+    filename: (req, file, cb) => {
+      let email = req.body.email;
+      const newFileName = email + "_" + Date.now() + "_" + file.originalname;
+      cb(null, newFileName);
+    },
+  });
+
+  let uploadBoard = multer({ storage: storage });
+
+  //DB에 데이터 처리
+  router.post("/write", uploadBoard.array("file", 5), async (req, res) => {
+    let title = req.body.title;
+    let writer = req.body.writer;
+    let content = req.body.content;
+    let email = req.body.email;
+
+    //이미지 삭제
+    // for (let i = 0; i < req.files.length; i++) {
+    //   fs.unlinkSync(
+    //     `../public/upload/temporary/${email + "_" + req.files[i].originalname}`
+    //   );
+    // }
+    fs.readdir("../public/upload/temporary/", (err, files) => {
+      // files.forEach((file) => {
+      for (var i = 0; i < files.length; i++) {
+        if (files[i].includes(email)) {
+          fs.unlinkSync(`../public/upload/temporary/${files[i]}`);
+          console.log(req.files[i].filename);
+          content = content.replace(
+            `/upload/board/${files[i]}`,
+            `/upload/board/${req.files[i].filename}`
+          );
+          console.log(content);
+        }
+        // });
+      }
+    });
+
+    let sql01 = `
+    SELECT  CONCAT( DATE_FORMAT(CURDATE(), '%Y%m%d')
+                   ,LPAD(ifnull(RIGHT(MAX(list_no),5),0)+1, 5, 0))     AS new_list_no
+      FROM board_list A
+     WHERE 1 = 1
+       AND A.reg_date = CURDATE()
+    `;
+
+    dbConfig.query(sql01, (err, data) => {
+      if (err) {
+        console.log(err.message);
+        console.log(`sql01: ${sql01}`);
+        return;
+      }
+
+      let new_list_no = data[0].new_list_no;
+      // console.log(`new_list_no: ${new_list_no}`);
+
+      let sql02 = `
+      INSERT INTO board_list  /* 게시판리스트 */
+                   (
+                     list_no           -- 리스트_순번
+                    ,list_title        -- 리스트_제목
+                    ,list_writer       -- 리스트_작성자
+                    ,list_ctnt         -- 리스트_내용
+                    ,reg_id            -- 등록_id
+                    ,reg_date          -- 등록_일자
+                    ,reg_time          -- 등록_시간
+                   )
+              VALUES
+                   (
+                     '${new_list_no}'
+                    ,'${title}'
+                    ,'${writer}'
+                    ,'${content}'
+                    ,'${email}'
+                    ,CURDATE()
+                    ,CURTIME()
+                   )
+      `;
+
+      dbConfig.query(sql02, (err, data) => {
+        if (err) {
+          console.log(err.message);
+          console.log(`sql02: ${sql02}`);
+          return;
+        }
+
+        // res.send(data);
+      });
+
+      let answerCnt = content.split("<em>").length - 1;
+      //console.log(`answerCnt: ${answerCnt}`);
+
+      for (var i = 0; i < answerCnt; i++) {
+        let answer = content.substring(
+          content.indexOf("<em>") + 4,
+          content.indexOf("</em>")
+        );
+        // console.log(`answer: ${answer} / content:${content}`);
+
+        let sql03 = `
+        INSERT INTO board_answer_m  /* 게시판답변기본 */
+                     (
+                       list_no           -- 리스트_순번
+                      ,ans_seq           -- 답변순번
+                      ,ans_ctnt          -- 답변내용
+                      ,ans_sel_cnt       -- 답변선택_횟수
+                      ,reg_id            -- 등록_id
+                      ,reg_date          -- 등록_일자
+                      ,reg_time          -- 등록_시간
+                     )
+                VALUES
+                     (
+                       '${new_list_no}'
+                      ,(SELECT ifnull(MAX(ans_seq),0)+1     FROM board_answer_m as subtable
+                         WHERE 1 = 1
+                           AND list_no = '${new_list_no}')
+                      ,REPLACE('${answer}', '&nbsp;', '')
+                      ,null
+                      ,'${email}'
+                      ,CURDATE()
+                      ,CURTIME()
+                     )
+      `;
+
+        dbConfig.query(sql03, (err, data) => {
+          if (err) {
+            console.log(err.message);
+            console.log(`sql03: ${sql03}`);
+            return;
+          }
+
+          // res.send(data);
+        });
+        content = content.replace(
+          content.substring(
+            content.indexOf("<em>"),
+            content.indexOf("</em>") + 5
+          ),
+          ""
+        );
+      }
+      res.send(data);
+    });
+  });
+
+  /* --------------------------------------------------- */
+  /*  temporary 폴더 이미지 삭제                          */
+  /* --------------------------------------------------- */
+  router.get("/write/deleteimage/:email", async (req, res) => {
+    const email = req.params.email;
+    // console.log(`email: ${email}`);
+    fs.readdir("../public/upload/temporary/", (err, files) => {
+      files.forEach((file) => {
+        if (file.includes(email)) {
+          fs.unlinkSync(`../public/upload/temporary/${file}`);
+        }
+      });
+    });
+  });
+
   return router;
 };
