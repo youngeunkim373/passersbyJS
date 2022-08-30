@@ -17,6 +17,8 @@ import SignUp from "page/member/SignUp";
 import SignOut from "page/member/SignOut";
 import Profile from "page/setting/Profile";
 import BoardWrite from "page/board/BoardWrite";
+//global
+import Layout from "global/component/Layout";
 
 function App() {
   /*---------- return ----------*/
@@ -24,15 +26,78 @@ function App() {
     <div>
       <Menu />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="board" element={<Board />} />
-        <Route path="board/thread/:no" element={<BoardThread />} />
-        <Route path="board/write" element={<BoardWrite />} />
-        <Route path="notice" element={<Notice />} />
-        <Route path="signin" element={<SignIn />} />
-        <Route path="signup" element={<SignUp />} />
-        <Route path="signout" element={<SignOut />} />
-        <Route path="profile" element={<Profile />} />
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <Home />
+            </Layout>
+          }
+        />
+        <Route
+          path="board"
+          element={
+            <Layout>
+              <Board />
+            </Layout>
+          }
+        />
+        <Route
+          path="board/thread/:no"
+          element={
+            <Layout>
+              <BoardThread />
+            </Layout>
+          }
+        />
+        <Route
+          path="board/write"
+          element={
+            <Layout>
+              <BoardWrite />
+            </Layout>
+          }
+        />
+        <Route
+          path="notice"
+          element={
+            <Layout>
+              <Notice />
+            </Layout>
+          }
+        />
+        <Route
+          path="signin"
+          element={
+            <Layout>
+              <SignIn />
+            </Layout>
+          }
+        />
+        <Route
+          path="signup"
+          element={
+            <Layout>
+              <SignUp />
+            </Layout>
+          }
+        />
+        <Route
+          path="signout"
+          element={
+            <Layout>
+              <SignOut />
+            </Layout>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <Layout>
+              <Profile />
+            </Layout>
+          }
+        />
       </Routes>
     </div>
   );
