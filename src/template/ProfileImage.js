@@ -1,7 +1,6 @@
 import React from "react";
 
 const ProfileImage = ({ image, width = "55px", height = "55px" }) => {
-  console.log(image);
   return (
     <div
       id="image"

@@ -22,6 +22,8 @@ import Comment from "template/Comment";
 import BasicInput from "template/BasicInput";
 import NestedComment from "template/NestedComment";
 import Alert from "template/Alert";
+//component
+import BoardChart from "./component/BoardChart";
 //util
 import * as CD from "global/util/calcDate";
 import * as AL from "global/util/autoLink";
@@ -62,6 +64,9 @@ const BoardThread = () => {
     id: "",
     value: "",
   });
+
+  //차트 리로드
+  const [reload, setReload] = useState(false);
 
   /*---------- Alert창 처리 ----------*/
   const [alert, setAlert] = useState({ open: false, text: "" });
@@ -126,6 +131,7 @@ const BoardThread = () => {
             text: "답변이 완료되었습니다",
           });
         }
+        setReload(true);
       });
   };
 
@@ -269,6 +275,9 @@ const BoardThread = () => {
             margin: "0 auto",
           }}
         />
+        <div className="auto-center" style={{ width: "96%" }}>
+          <BoardChart no={no} reload={reload} />
+        </div>
         <form
           name="cmntForm"
           encType="multi part/form-data"

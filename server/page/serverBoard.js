@@ -258,6 +258,90 @@ module.exports = (app, dbConfig, multer, bodyparser, express, fs) => {
   });
 
   /* --------------------------------------------------- */
+  /*  게시판 통계자료 조회                                */
+  /* --------------------------------------------------- */
+  router.get("/stats/:no/:email", async (req, res) => {
+    //params
+    let no = req.params.no;
+    let email = req.params.email;
+    // console.log(`no: ${no} / email:${email}`);
+
+    let sql01 = `
+    SELECT  REPLACE(A.ans_ctnt, '&nbsp;', '')            AS ans_ctnt
+           ,IFNULL(A.ans_sel_cnt,0)                      AS ans_sel_cnt
+           ,IFNULL(B.user_sex_f,0)                       AS user_sex_f
+           ,IFNULL(B.user_sex_m,0)                       AS user_sex_m
+           ,IFNULL(B.user_age_0,0)                       AS user_age_0
+           ,IFNULL(B.user_age_10,0)                      AS user_age_10
+           ,IFNULL(B.user_age_20,0)                      AS user_age_20
+           ,IFNULL(B.user_age_30,0)                      AS user_age_30
+           ,IFNULL(B.user_age_40,0)                      AS user_age_40
+           ,IFNULL(B.user_age_50,0)                      AS user_age_50
+           ,IFNULL(B.user_age_60,0)                      AS user_age_60
+           ,IFNULL(B.user_age_70,0)                      AS user_age_70
+           ,IFNULL(B.user_age_80,0)                      AS user_age_80
+           ,IFNULL(B.user_age_90,0)                      AS user_age_90
+           ,IFNULL(B.user_age_100,0)                     AS user_age_100
+           ,IFNULL(B.user_region_seoul,0)                AS user_region_seoul      
+           ,IFNULL(B.user_region_gyeonggi,0)             AS user_region_gyeonggi   
+           ,IFNULL(B.user_region_gwangju,0)              AS user_region_gwangju    
+           ,IFNULL(B.user_region_daegu,0)                AS user_region_daegu      
+           ,IFNULL(B.user_region_daejeon,0)              AS user_region_daejeon    
+           ,IFNULL(B.user_region_busan,0)                AS user_region_busan      
+           ,IFNULL(B.user_region_incheon,0)              AS user_region_incheon    
+           ,IFNULL(B.user_region_ulsan,0)                AS user_region_ulsan      
+           ,IFNULL(B.user_region_sejong,0)               AS user_region_sejong     
+           ,IFNULL(B.user_region_jeju,0)                 AS user_region_jeju       
+           ,IFNULL(B.user_region_gangwon,0)              AS user_region_gangwon    
+           ,IFNULL(B.user_region_gyeongsang,0)           AS user_region_gyeongsang 
+           ,IFNULL(B.user_region_jeolla,0)               AS user_region_jeolla     
+           ,IFNULL(B.user_region_chungcheong,0)          AS user_region_chungcheong
+           ,(SELECT ans_seq     FROM board_answer_log  /* 게시판답변로그 */
+              WHERE 1 = 1
+                AND list_no = A.list_no
+                AND reg_id = A.reg_id)                   AS my_answer
+      FROM board_answer_m A  /* 게시판답변기본 */
+      LEFT OUTER JOIN board_answer_stats B  /* 게시판답변통계 */
+              ON B.list_no  =  A.list_no
+             AND B.ans_seq  =  A.ans_seq
+     WHERE 1 = 1
+       AND A.list_no = '${no}'
+    `;
+
+    dbConfig.query(sql01, (err, data01) => {
+      if (err) {
+        console.log(err.message);
+        console.log(`sql: ${sql01}`);
+        return;
+      }
+
+      let sql02 = `
+      SELECT B.ans_ctnt          AS my_answer
+        FROM board_answer_log A  /* 게시판답변로그 */
+        LEFT OUTER JOIN board_answer_m B  /* 게시판답변기본 */
+                ON B.list_no  =  A.list_no
+               AND B.ans_seq  =  A.ans_seq
+       WHERE 1 = 1
+         AND A.list_no = '${no}'
+         AND A.reg_id = '${email}'
+      `;
+
+      dbConfig.query(sql02, (err, data02) => {
+        if (err) {
+          console.log(err.message);
+          console.log(`sql02: ${sql02}`);
+          return;
+        }
+
+        res.send({
+          data: data01,
+          myAnswer: data02.length !== 0 ? data02[0].my_answer : null,
+        });
+      });
+    });
+  });
+
+  /* --------------------------------------------------- */
   /*  게시판 댓글 조회                                    */
   /* --------------------------------------------------- */
   //댓글 조회 처리
