@@ -15,7 +15,7 @@ export function autolink(text) {
       //no referer 보안이슈 조사해보기
       `<a href="$1://$2" target="_blank"> 
             $1://$2
-          </a>`
+       </a>`
     )
     .replace(regEmail, "<a href='mailto:$1'>$1</a>");
 

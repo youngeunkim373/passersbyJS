@@ -21,11 +21,13 @@ import BoardWrite from "page/board/BoardWrite";
 import Layout from "global/component/Layout";
 import NoticeThread from "page/notice/NoticeThread";
 import CreatePw from "page/member/CreatePw";
+import IndexModal from "page/home/IndexModal";
 
 function App() {
   /*---------- return ----------*/
   return (
     <div>
+      <IndexModal />
       <Menu />
       <Routes>
         <Route

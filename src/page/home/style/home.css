@@ -125,3 +125,51 @@
     width: 485px;
   }
 }
+
+/* --------------------------------------------------- */
+/*  IndexModal.js                                      */
+/* --------------------------------------------------- */
+.loc-modal-background {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: #9000ff;
+}
+
+.loc-title {
+  color: white;
+  font-size: 7vh;
+  font-weight: bold;
+  position: absolute;
+  vertical-align: super;
+  margin-top: 5vh;
+  z-index: 2;
+  font-family: "sanjuGotgam";
+}
+
+/* .loc-logo {
+  object-fit: cover;
+  width: 100vw;
+  position: absolute;
+  background-size: contain;
+} */
+
+.loc-logo {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  transform: translateX(200px);
+}
+
+@media (max-width: 800px) {
+  .loc-logo {
+    width: 100vw;
+    height: auto;
+    /* padding-top: 72px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+  }
+}
