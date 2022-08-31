@@ -76,6 +76,9 @@ footer {
 .P100 {
   padding: 100px;
 }
+.P150 {
+  padding: 150px;
+}
 .P200 {
   padding: 200px;
 }
@@ -363,4 +366,10 @@ footer {
 /*---------- 조회 ----------*/
 .none {
   display: none;
+}
+
+/*---------- 텍스트 ----------*/
+.text-break {
+  word-wrap: break-word;
+  white-space: normal;
 }

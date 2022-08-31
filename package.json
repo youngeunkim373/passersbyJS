@@ -16,6 +16,7 @@
     "react-beforeunload": "2.5.3",
     "react-dom": "^18.2.0",
     "react-google-charts": "4.0.0",
+    "react-material-ui-carousel": "3.4.2",
     "react-quill": "2.0.0",
     "react-router-dom": "6.3.0",
     "react-scripts": "5.0.1",

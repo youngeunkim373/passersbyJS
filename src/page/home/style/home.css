@@ -41,3 +41,87 @@
   justify-content: flex-end;
   width: 100%;
 }
+
+/* --------------------------------------------------- */
+/*  Home.js                                            */
+/* --------------------------------------------------- */
+.loc-banner-title-font {
+  font-family: "ibmRegular";
+  font-size: 33px;
+  font-weight: bold;
+
+  position: absolute;
+  left: 10vw;
+  top: 50px;
+}
+
+.loc-banner-ctnt-font {
+  font-family: "ibmLight";
+  font-size: 25px;
+  font-weight: bold;
+
+  position: absolute;
+  left: 10vw;
+  top: 90px;
+}
+
+.loc-banner-small-font {
+  font-family: "ibmLight";
+  font-size: 17px;
+  font-weight: bold;
+
+  position: absolute;
+  left: 10vw;
+  top: 200px;
+}
+
+.loc-category-box {
+  width: 182px;
+  height: 250px;
+  margin: 30px;
+
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 5px 5px 13px 3px rgba(0, 0, 0, 0.3);
+
+  cursor: pointer;
+}
+
+.loc-category-box:hover {
+  opacity: 0.7;
+}
+
+.loc-category-font {
+  font-size: 110px;
+  margin: 50px 10px;
+}
+
+.loc-mbrshp-title-font {
+  font-family: "ibmRegular";
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.loc-board-title-font {
+  font-family: "ibmRegular";
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.loc-divider {
+  width: 100px;
+  height: 2px;
+  background-color: #9000ff;
+}
+
+.loc-carousel_width {
+  width: 970px;
+}
+
+@media (max-width: 970px) {
+  .loc-carousel_width {
+    width: 485px;
+  }
+}

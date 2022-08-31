@@ -45,6 +45,9 @@ const transporter = nodemailer.createTransport({
 /* --------------------------------------------------- */
 /*  페이지별 서버                                       */
 /* --------------------------------------------------- */
+const home = require("./page/serverHome")(app, dbConfig);
+app.use("/home", home);
+
 const notice = require("./page/serverNotice")(app, dbConfig);
 app.use("/notice", notice);
 
