@@ -10,6 +10,7 @@ import Alert from "template/Alert";
 import "./style/member.css";
 //context
 import AuthContext from "context/AuthProvider";
+import FindUser from "./component/FindUser";
 
 const SignIn = () => {
   /*---------- set 함수 ----------*/
@@ -84,6 +85,9 @@ const SignIn = () => {
         <Alert alert={alert} setAlert={setAlert}>
           {alert}
         </Alert>
+        <FindUser popup={popup} setPopup={setPopup}>
+          {popup}
+        </FindUser>
       </div>
       <div>
         <label className="loc-label">이메일</label>
@@ -111,6 +115,14 @@ const SignIn = () => {
           onChange={onTextChange}
           preventSubmitOnEnter={false}
         />
+      </div>
+      <div
+        className="pointer black PT10 PB50 right"
+        onClick={() => {
+          setPopup({ open: true, text: "" });
+        }}
+      >
+        <span className="base-font">아이디찾기 | 비밀번호 찾기</span>
       </div>
       <div className="align-center PT50">
         <PushButton name="로그인" type="submit" />

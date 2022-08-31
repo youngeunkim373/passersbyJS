@@ -146,5 +146,92 @@ module.exports = (app, dbConfig, multer, bodyparser, express, transporter) => {
     });
   });
 
+  /* --------------------------------------------------- */
+  /*  이메일 찾기 조회                                    */
+  /* --------------------------------------------------- */
+  router.get("/signin/findemail/:email", async (req, res) => {
+    //params
+    const email = req.params.email;
+    console.log(`email: ${email}`);
+
+    let sql = `
+    SELECT COUNT(*)         AS checkEmail
+      FROM members  /* 회원관리 */
+     WHERE 1 = 1
+       AND user_email = '${email}'
+  `;
+
+    dbConfig.query(sql, (err, data) => {
+      if (err) {
+        console.log(err.message);
+        console.log(`sql: ${sql}`);
+        return;
+      }
+      res.send(data);
+    });
+  });
+
+  /* --------------------------------------------------- */
+  /*  비밀번호 찾기 조회 및 이메일 전송                   */
+  /* --------------------------------------------------- */
+  router.get("/signin/findpassword/:email", async (req, res) => {
+    //params
+    const email = req.params.email;
+    // console.log(`email: ${email}`);
+
+    let sql = `
+    SELECT COUNT(*)         AS checkEmail
+      FROM members  /* 회원관리 */
+     WHERE 1 = 1
+       AND user_email = '${email}'
+  `;
+
+    dbConfig.query(sql, (err, data) => {
+      if (err) {
+        console.log(err.message);
+        console.log(`sql: ${sql}`);
+        return;
+      }
+
+      // console.log(data[0].checkEmail);
+      if (data[0].checkEmail > 0) {
+        let info = transporter.sendMail({
+          from: "youngeunkim373@gmail.com", //보내는 이메일
+          to: email, //받는사람 이메일
+          subject: "길 가는 사람들 비밀번호 변경 링크입니다.", //메일 제목
+          text: `길 가는 사람들 비밀번호 변경 메일입니다. 아래의 링크에서 비밀번호를 변경하세요. http://localhost:3000/CreatePw/${email}`, //내용
+        });
+      }
+
+      res.send(data);
+    });
+  });
+
+  /* --------------------------------------------------- */
+  /*  비밀번호 변경                                       */
+  /* --------------------------------------------------- */
+  router.post("/createpw", async (req, res) => {
+    let email = req.body.email;
+    let password = req.body.password;
+    // console.log(`email: ${email} / password: ${password}`);
+
+    let sql = `
+    UPDATE members  /* 회원관리 */
+       SET  user_pw = '${password}'
+     WHERE 1 = 1
+       AND user_email = '${email}'
+  `;
+
+    dbConfig.query(sql, (err, data) => {
+      if (err) {
+        console.log(err.message);
+        console.log(`sql: ${sql}`);
+        return;
+      }
+
+      res.send(data);
+    });
+  });
+
   return router;
 };

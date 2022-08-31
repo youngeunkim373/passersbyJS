@@ -20,6 +20,7 @@ import BoardWrite from "page/board/BoardWrite";
 //global
 import Layout from "global/component/Layout";
 import NoticeThread from "page/notice/NoticeThread";
+import CreatePw from "page/member/CreatePw";
 
 function App() {
   /*---------- return ----------*/
@@ -96,6 +97,14 @@ function App() {
           element={
             <Layout>
               <SignOut />
+            </Layout>
+          }
+        />
+        <Route
+          path="createpw/:email"
+          element={
+            <Layout>
+              <CreatePw />
             </Layout>
           }
         />
