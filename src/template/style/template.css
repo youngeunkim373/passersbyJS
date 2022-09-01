@@ -66,7 +66,7 @@
   border-radius: 8px;
   background-color: #fffaff;
   color: #101820;
-  z-index: 1;
+  z-index: 999;
 }
 
 .SelectBox-li {
@@ -77,6 +77,20 @@
 
 .SelectBox-li:hover {
   background-color: #ffe8f5;
+}
+
+.SelectBox-ul::-webkit-scrollbar {
+  width: 8px; /* 스크롤바의 너비 */
+}
+
+.SelectBox-ul::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #9000ff; /* 스크롤바의 색상 */
+  border-radius: 10px;
+}
+
+.SelectBox-ul::-webkit-scrollbar-track {
+  background: rgba(144, 0, 255, 0.1); /*스크롤바 뒷 배경 색상*/
 }
 
 /* --------------------------------------------------- */

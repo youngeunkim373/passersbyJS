@@ -30,7 +30,8 @@ const SelectBox = ({ list = {}, setOption, width, curVal }) => {
       <ul
         className="SelectBox-ul"
         style={{
-          height: 33 * list.length,
+          height: list.length >= 5 ? "180px" : 33 * list.length,
+          overflow: list.length >= 5 ? "auto" : "hidden",
           display: isShowOptions === false ? "none" : "block",
         }}
       >
