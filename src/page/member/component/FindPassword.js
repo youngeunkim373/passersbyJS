@@ -21,6 +21,7 @@ const FindPassword = ({ email, setAlert, onTextChange }) => {
         open: true,
         text: "이메일을 입력하세요.",
       });
+      return;
     }
 
     const config = {
