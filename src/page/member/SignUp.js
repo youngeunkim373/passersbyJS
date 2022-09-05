@@ -58,8 +58,8 @@ const SignUp = () => {
     password: "",
     confirm: "",
     nickname: "",
-    sex: "",
     age: "",
+    sex: "",
     region: "",
   });
   const { email, password, confirm, nickname, sex, age, region } = state;
