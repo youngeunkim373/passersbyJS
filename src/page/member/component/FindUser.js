@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 //MUI
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -29,7 +29,11 @@ const style = {
 
 const FindUser = ({ popup, setPopup }) => {
   /*---------- set 함수 ----------*/
-  const [radio, setRadio] = useState({ email: true, password: false }); //radio 선택 처리
+  //radio 선택 처리
+  const [radio, setRadio] = useState({
+    email: true,
+    password: false,
+  });
   //로그인 데이터 처리
   const [state, setState] = useState({
     email: "",
@@ -49,6 +53,15 @@ const FindUser = ({ popup, setPopup }) => {
     const { value, name } = e.target;
     setState({ ...state, [name]: value });
   };
+
+  /*---------- useEffect ----------*/
+  useEffect(() => {
+    setRadio({ email: true, password: false });
+    setState({
+      email: "",
+      password: "",
+    });
+  }, [popup]);
 
   /*---------- return ----------*/
   return (
@@ -109,7 +122,7 @@ const FindUser = ({ popup, setPopup }) => {
                     marginTop: "-65px",
                   }}
                 >
-                  <CloseIcon onClick={handleClose} />
+                  <CloseIcon onClick={handleClose} className="pointer" />
                 </div>
               </RadioGroup>
               <Divider />
