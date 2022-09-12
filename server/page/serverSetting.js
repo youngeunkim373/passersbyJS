@@ -37,7 +37,6 @@ module.exports = (app, dbConfig, multer, bodyparser, express, fs) => {
   /*  프로필이미지 변경                                   */
   /* --------------------------------------------------- */
   //첨부파일 처리
-  //https://github.com/expressjs/multer/blob/master/doc/README-ko.md -> multer 이용법
   router.use("/file/", express.static("../../public/upload/profileImage"));
 
   const storage = multer.diskStorage({

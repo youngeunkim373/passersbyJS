@@ -8,7 +8,7 @@ export function calcDate(timediff) {
   } else if (timediff < 43200) {
     return `${parseInt(timediff / 1440)}일 전`;
   } else if (timediff < 525600) {
-    return `${Math.round(timediff / 10950)}달 전`;
+    return `${Math.round(timediff / 43800)}달 전`;
   } else {
     return `${Math.round(timediff / 525600)}년 전`;
   }

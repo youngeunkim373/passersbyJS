@@ -274,7 +274,7 @@ const BoardThread = () => {
                   display="none"
                   data={AL.autolink(ctnt)}
                   width="100%"
-                  readonly={true}
+                  readOnly={true}
                 />
               </TableCell>
             </TableRow>
