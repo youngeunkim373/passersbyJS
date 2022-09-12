@@ -100,25 +100,33 @@ const BoardWrite = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    var formData = new FormData();
-    formData.append("title", list.title);
-    formData.append("writer", list.writer);
-    formData.append(
-      "content",
-      list.content.replaceAll("/upload/temporary/", "/upload/board/")
-    );
-    formData.append("email", list.email);
+    // var formData = new FormData();
+    // formData.append("title", list.title);
+    // formData.append("writer", list.writer);
+    // formData.append(
+    //   "content",
+    //   list.content.replaceAll("/upload/temporary/", "/upload/board/")
+    // );
+    // formData.append("email", list.email);
 
-    const input = document.getElementById("imageUpload");
-    const files = Object.values(input.files);
-    Object.values(files).forEach((file) => {
-      formData.append("file", file);
-    });
+    // const input = document.getElementById("imageUpload");
+    // const files = Object.values(input.files);
+    // Object.values(files).forEach((file) => {
+    //   formData.append("file", file);
+    // });
 
     // for (let value of formData.values()) {
     //   console.log(value);
     // }
     // return;
+
+    const title = list.title;
+    const writer = list.writer;
+    const content = list.content.replaceAll(
+      "/upload/temporary/",
+      "/upload/board/"
+    );
+    const email = list.email;
 
     //빈칸 방지
     for (var el in list) {
@@ -131,10 +139,23 @@ const BoardWrite = () => {
       }
     }
 
-    let config = { "Content-Type": "multipart/form-data;charset=UTF-8" };
+    // const config = {
+    //   headers: { "Content-Type": "multipart/form-data" },
+    //   withCredentials: true,
+    // };
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
 
     axios
-      .post("http://localhost:4000/board/write", formData, config)
+      //.post("http://localhost:4000/board/write", formData, config)
+      .post(
+        "http://localhost:4000/board/write",
+        JSON.stringify({ title, writer, content, email }),
+        config
+      )
+
       .then((res) => {
         // console.log(res.data);
         //게시판으로 페이지 이동

@@ -546,45 +546,54 @@ module.exports = (app, dbConfig, multer, bodyparser, express, fs) => {
   /* --------------------------------------------------- */
   //첨부파일 처리
   //https://github.com/expressjs/multer/blob/master/doc/README-ko.md -> multer 이용법
-  router.use("/file/", express.static("../public/upload/board"));
+  // router.use("/file/", express.static("../public/upload/board"));
 
-  const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "../public/upload/board");
-    },
-    filename: (req, file, cb) => {
-      let email = req.body.email;
-      const newFileName = email + "_" + Date.now() + "_" + file.originalname;
-      cb(null, newFileName);
-    },
-  });
+  // const storage = multer.diskStorage({
+  //   destination: (req, file, cb) => {
+  //     cb(null, "../public/upload/board");
+  //   },
+  //   filename: (req, file, cb) => {
+  //     let email = req.body.email;
+  //     const newFileName = email + "_" + Date.now() + "_" + file.originalname;
+  //     cb(null, newFileName);
+  //   },
+  // });
 
-  let uploadBoard = multer({ storage: storage });
+  // let uploadBoard = multer({ storage: storage });
 
   //DB에 데이터 처리
-  router.post("/write", uploadBoard.array("file", 5), async (req, res) => {
+  //router.post("/write", uploadBoard.array("file", 5), async (req, res) => {
+  router.post("/write", async (req, res) => {
     let title = req.body.title;
     let writer = req.body.writer;
     let content = req.body.content;
     let email = req.body.email;
 
     //이미지 삭제
-    // for (let i = 0; i < req.files.length; i++) {
-    //   fs.unlinkSync(
-    //     `../public/upload/temporary/${email + "_" + req.files[i].originalname}`
-    //   );
-    // }
     fs.readdir("../public/upload/temporary/", (err, files) => {
-      // files.forEach((file) => {
       for (var i = 0; i < files.length; i++) {
+        console.log(`1: ${email} / ${files[i]}`);
         if (files[i].includes(email)) {
-          fs.unlinkSync(`../public/upload/temporary/${files[i]}`);
-          console.log(req.files[i].filename);
-          content = content.replace(
-            `/upload/board/${files[i]}`,
-            `/upload/board/${req.files[i].filename}`
+          console.log(`2: ${email} / ${files[i]}`);
+          fs.rename(
+            `../public/upload/temporary/${files[i]}`,
+            `../public/upload/board/${files[i]}`,
+            function (err) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log("Successfully renamed the directory.");
+              }
+            }
           );
-          console.log(content);
+          //fs.unlinkSync(`../public/upload/temporary/${files[i]}`);
+
+          // console.log(files[i].filename);
+          // content = content.replace(
+          //   `/upload/board/${files[i]}`,
+          //   `/upload/board/${files[i].filename}`
+          // );
+          // console.log(content);
         }
         // });
       }
