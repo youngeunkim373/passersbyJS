@@ -103,14 +103,20 @@ function BoardTable({ title, url }) {
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           {board.length === 0 ? (
-            <div
-              className="flex-center"
-              style={{
-                minHeight: "100px",
-              }}
-            >
-              아직 등록한 {title}이 없습니다.
-            </div>
+            <TableBody>
+              <TableRow>
+                <TableCell
+                  align="center"
+                  sx={{
+                    fontWeight: "bold",
+                    fontFamily: "ibmLight",
+                    fontSize: "18px",
+                  }}
+                >
+                  아직 등록한 {title}이 없습니다.
+                </TableCell>
+              </TableRow>
+            </TableBody>
           ) : (
             board.map((row) => (
               <TableBody

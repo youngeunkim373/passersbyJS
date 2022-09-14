@@ -1,7 +1,7 @@
 export function autolink(text) {
   //   console.log(text);
   var regURL = new RegExp(
-    "(http|https|ftp|telnet|news|irc)://([-/.a-zA-Z0-9_~#%$?&=:200-377()]+)",
+    "(http|https|ftp|telnet|news|irc)://([-/.a-zA-Z0-9_~#%$?&=:200-377@()]+)",
     "gi"
   );
   var regEmail = new RegExp(

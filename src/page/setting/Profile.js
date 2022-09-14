@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 //MUI
 import { styled } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
@@ -20,7 +20,7 @@ const StyledTab = styled(Tab)({
 
 const Profile = () => {
   /*---------- 탭 선택 ----------*/
-  const [tab, setTab] = React.useState("myProfile");
+  const [tab, setTab] = useState("myProfile");
 
   const handleChange = (e, newValue) => {
     setTab(newValue);
