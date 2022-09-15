@@ -14,8 +14,6 @@
 <img src="https://user-images.githubusercontent.com/104338021/190337704-dd592151-d60a-4b58-92d3-e81f36e1e793.png"  width="500" />
 </p>
 
-<br/>
-
 ## 🛠사용된 기술
 ### Front
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <br />
