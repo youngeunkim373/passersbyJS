@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=transparent&color=9000ff&height=300&section=header&text=길%가는%사람들&fontSize=80&fontColor=9000ff)
+![header](https://capsule-render.vercel.app/api?type=transparent&color=9000ff&height=300&section=header&text=길%20가는%20사람들&fontSize=80&fontColor=9000ff&animation=twinkling)
 ![header](https://capsule-render.vercel.app/api?type=transparent&color=9000ff&height=300&section=header&text=Passersby&fontSize=40&fontColor=9000ff)
 
 
