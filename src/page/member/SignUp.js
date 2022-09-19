@@ -113,7 +113,7 @@ const SignUp = () => {
 
     axios
       .post(
-        "http://localhost:4000/member/signup/sendEmail",
+        `${process.env.REACT_APP_API_ROOT}/member/signup/sendEmail`,
         JSON.stringify({ email }), //key랑 value가 이름이 같으면 그냥 이렇게 쓰면 됨 & 문자열 변환 필수
         config
       )
@@ -237,7 +237,7 @@ const SignUp = () => {
 
     axios
       .post(
-        "http://localhost:4000/member/signup",
+        `${process.env.REACT_APP_API_ROOT}/member/signup`,
         JSON.stringify({ email, password, nickname, sex, age, region }),
         config
       )

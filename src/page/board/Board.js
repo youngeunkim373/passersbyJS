@@ -59,7 +59,7 @@ export default function Board(props) {
     // console.log(`params: ${option} / ${search} / ${page}`);
     async function fetchData01() {
       await axios
-        .get("http://localhost:4000/board/data", {
+        .get(`${process.env.REACT_APP_API_ROOT}/board/data`, {
           params: {
             option: option,
             search: search,
@@ -76,7 +76,7 @@ export default function Board(props) {
 
     async function fetchData02() {
       await axios
-        .get("http://localhost:4000/board/page", {
+        .get(`${process.env.REACT_APP_API_ROOT}/board/page`, {
           params: {
             search: search,
           },

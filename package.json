@@ -12,6 +12,7 @@
     "@testing-library/user-event": "13.5.0",
     "animated": "0.2.2",
     "axios": "0.27.2",
+    "env-cmd": "10.1.0",
     "node-polyfill-webpack-plugin": "2.0.1",
     "react": "^18.2.0",
     "react-beforeunload": "2.5.3",
@@ -25,11 +26,12 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "env-cmd -f .env.production node scripts/build.js",
     "test": "node scripts/test.js",
     "client": "npm start",
-    "server": "cd server && nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "server:dev": "cd server && nodemon server.js",
+    "server": "cd server && node server.js",
+    "dev": "cross-env NODE_ENV=development concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "eslintConfig": {
     "extends": [
@@ -48,5 +50,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "7.0.3",
+    "webpack-cli": "4.10.0"
   }
 }

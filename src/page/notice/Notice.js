@@ -34,7 +34,7 @@ const Notice = () => {
   useEffect(() => {
     async function fetchData01() {
       await axios
-        .get(`http://localhost:4000/notice/list`, {
+        .get(`${process.env.REACT_APP_API_ROOT}/notice/list`, {
           params: {
             page: page,
           },
@@ -49,7 +49,7 @@ const Notice = () => {
 
     async function fetchData02() {
       await axios
-        .get("http://localhost:4000/notice/page", {})
+        .get(`${process.env.REACT_APP_API_ROOT}/notice/page`, {})
         .then((res) => {
           //console.log(`res.data.pageCnt: ${res.data[0].pageCnt}`);
           if (res.data[0].pageCnt > 0) {

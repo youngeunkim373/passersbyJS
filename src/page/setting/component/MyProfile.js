@@ -118,7 +118,7 @@ const MyProfile = () => {
 
     axios
       .put(
-        "http://localhost:4000/setting/profile/myprofile/image",
+        `${process.env.REACT_APP_API_ROOT}/setting/profile/myprofile/image`,
         formData,
         config
       )
@@ -157,7 +157,7 @@ const MyProfile = () => {
 
     axios
       .put(
-        "http://localhost:4000/setting/profile/myprofile/update",
+        `${process.env.REACT_APP_API_ROOT}/setting/profile/myprofile/update`,
         JSON.stringify({ email, nicknm, sex, region, initNicknm }),
         config
       )
@@ -198,7 +198,10 @@ const MyProfile = () => {
     if (email !== null) {
       async function fetchData() {
         await axios
-          .get(`http://localhost:4000/setting/profile/myprofile/${email}`, {})
+          .get(
+            `${process.env.REACT_APP_API_ROOT}/setting/profile/myprofile/${email}`,
+            {}
+          )
           .then((res) => {
             setProfile({
               email: res.data[0].email,

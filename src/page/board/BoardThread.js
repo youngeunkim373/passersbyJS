@@ -74,7 +74,7 @@ const BoardThread = () => {
   /*---------- 댓글 조회 ----------*/
   const fetchData02 = () => {
     axios
-      .get(`http://localhost:4000/board/comment`, {
+      .get(`${process.env.REACT_APP_API_ROOT}/board/comment`, {
         params: {
           no: no,
           page: page,
@@ -111,7 +111,7 @@ const BoardThread = () => {
     }
 
     await axios
-      .get("http://localhost:4000/board/answer", {
+      .get(`${process.env.REACT_APP_API_ROOT}/board/answer`, {
         params: {
           list_no: no,
           ans_seq: id,
@@ -165,7 +165,7 @@ const BoardThread = () => {
 
     axios
       .post(
-        "http://localhost:4000/board/thread/cmnt",
+        `${process.env.REACT_APP_API_ROOT}/board/thread/cmnt`,
         JSON.stringify({ no, cmntInput, email }),
         config
       )
@@ -181,7 +181,7 @@ const BoardThread = () => {
   useEffect(() => {
     async function fetchData() {
       await axios
-        .get(`http://localhost:4000/board/thread/${no}`, {})
+        .get(`${process.env.REACT_APP_API_ROOT}/board/thread/${no}`, {})
         .then((res) => {
           // console.log(res.data[0].list_ctnt);
           setBoard({
@@ -221,7 +221,7 @@ const BoardThread = () => {
   useEffect(() => {
     async function fetchData03() {
       await axios
-        .get(`http://localhost:4000/board/thread/page/${no}`, {})
+        .get(`${process.env.REACT_APP_API_ROOT}/board/thread/page/${no}`, {})
         .then((res) => {
           if (res.data[0].pageCnt > 0) {
             setPageCnt(res.data[0].pageCnt);

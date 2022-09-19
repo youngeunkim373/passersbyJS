@@ -570,14 +570,14 @@ module.exports = (app, dbConfig, multer, bodyparser, express, fs) => {
     let email = req.body.email;
 
     //이미지 삭제
-    fs.readdir("../public/upload/temporary/", (err, files) => {
+    fs.readdir("./upload/temporary/", (err, files) => {
+      console.log(files);
       for (var i = 0; i < files.length; i++) {
-        console.log(`1: ${email} / ${files[i]}`);
+        console.log(` ${email} / ${files[i]}`);
         if (files[i].includes(email)) {
-          console.log(`2: ${email} / ${files[i]}`);
           fs.rename(
-            `../public/upload/temporary/${files[i]}`,
-            `../public/upload/board/${files[i]}`,
+            `./upload/temporary/${files[i]}`,
+            `./upload/board/${files[i]}`,
             function (err) {
               if (err) {
                 console.log(err);
@@ -586,7 +586,7 @@ module.exports = (app, dbConfig, multer, bodyparser, express, fs) => {
               }
             }
           );
-          //fs.unlinkSync(`../public/upload/temporary/${files[i]}`);
+          //fs.unlinkSync(`../upload/temporary/${files[i]}`);
 
           // console.log(files[i].filename);
           // content = content.replace(
@@ -712,10 +712,10 @@ module.exports = (app, dbConfig, multer, bodyparser, express, fs) => {
   router.get("/write/deleteimage/:email", async (req, res) => {
     const email = req.params.email;
     // console.log(`email: ${email}`);
-    fs.readdir("../public/upload/temporary/", (err, files) => {
+    fs.readdir("./upload/temporary/", (err, files) => {
       files.forEach((file) => {
         if (file.includes(email)) {
-          fs.unlinkSync(`../public/upload/temporary/${file}`);
+          fs.unlinkSync(`./upload/temporary/${file}`);
         }
       });
     });

@@ -48,13 +48,16 @@ function BoardTable({ title, url }) {
     // console.log(`params: ${option} / ${search} / ${page}`);
     async function fetchData() {
       await axios
-        .get(`http://localhost:4000/setting/profile/myboard/${url}`, {
-          params: {
-            email: sessionStorage.getItem("loginEmail"),
-            search: search,
-            page: page,
-          },
-        })
+        .get(
+          `${process.env.REACT_APP_API_ROOT}/setting/profile/myboard/${url}`,
+          {
+            params: {
+              email: sessionStorage.getItem("loginEmail"),
+              search: search,
+              page: page,
+            },
+          }
+        )
         .then((res) => {
           // console.log(res.data);
           setBoard(res.data);
@@ -69,12 +72,15 @@ function BoardTable({ title, url }) {
   useEffect(() => {
     async function fetchData() {
       await axios
-        .get(`http://localhost:4000/setting/profile/myboard/${url}/page`, {
-          params: {
-            email: sessionStorage.getItem("loginEmail"),
-            search: search,
-          },
-        })
+        .get(
+          `${process.env.REACT_APP_API_ROOT}/setting/profile/myboard/${url}/page`,
+          {
+            params: {
+              email: sessionStorage.getItem("loginEmail"),
+              search: search,
+            },
+          }
+        )
         .then((res) => {
           //console.log(`res.data.pageCnt: ${res.data[0].pageCnt}`);
           if (res.data[0].pageCnt > 0) {

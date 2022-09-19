@@ -37,11 +37,11 @@ module.exports = (app, dbConfig, multer, bodyparser, express, fs) => {
   /*  프로필이미지 변경                                   */
   /* --------------------------------------------------- */
   //첨부파일 처리
-  router.use("/file/", express.static("../../public/upload/profileImage"));
+  router.use("/file/", express.static("./upload/profileImage"));
 
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "../public/upload/profileImage");
+      cb(null, "./upload/profileImage");
     },
     filename: (req, file, cb) => {
       let email = req.body.email;
@@ -101,7 +101,7 @@ module.exports = (app, dbConfig, multer, bodyparser, express, fs) => {
             //파일삭제
             // console.log(`prevImg: ${prevImg}`);
             if (prevImg !== null) {
-              fs.unlink(`../public/upload/profileImage/${prevImg}`, (err) => {
+              fs.unlink(`./upload/profileImage/${prevImg}`, (err) => {
                 // if (err.code == "ENOENT") {
                 //   console.log("파일 삭제 Error 발생");
                 // }

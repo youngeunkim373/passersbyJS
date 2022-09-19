@@ -64,7 +64,7 @@ const NoticeThread = () => {
   /*---------- 댓글 조회 ----------*/
   function fetchData02() {
     axios
-      .get(`http://localhost:4000/notice/comment`, {
+      .get(`${process.env.REACT_APP_API_ROOT}/notice/comment`, {
         params: {
           no: no,
           page: page,
@@ -116,7 +116,7 @@ const NoticeThread = () => {
 
     axios
       .post(
-        "http://localhost:4000/notice/thread/cmnt",
+        `${process.env.REACT_APP_API_ROOT}/notice/thread/cmnt`,
         JSON.stringify({ no, cmntInput, email }),
         config
       )
@@ -132,7 +132,7 @@ const NoticeThread = () => {
   useEffect(() => {
     async function fetchData() {
       await axios
-        .get(`http://localhost:4000/notice/thread/${no}`, {})
+        .get(`${process.env.REACT_APP_API_ROOT}/notice/thread/${no}`, {})
         .then((res) => {
           // console.log(res.data[0]);
           setNotice({
@@ -162,7 +162,7 @@ const NoticeThread = () => {
   useEffect(() => {
     async function fetchData03() {
       await axios
-        .get(`http://localhost:4000/notice/thread/page/${no}`, {})
+        .get(`${process.env.REACT_APP_API_ROOT}/notice/thread/page/${no}`, {})
         .then((res) => {
           // console.log(res.data[0].pageCnt);
           if (res.data[0].pageCnt > 0) {

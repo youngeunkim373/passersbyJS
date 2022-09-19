@@ -87,9 +87,9 @@ const BoardChart = ({ no, reload }) => {
     async function fetchData() {
       await axios
         .get(
-          `http://localhost:4000/board/stats/${no}/${sessionStorage.getItem(
-            "loginEmail"
-          )}`,
+          `${
+            process.env.REACT_APP_API_ROOT
+          }/board/stats/${no}/${sessionStorage.getItem("loginEmail")}`,
           {}
         )
         .then((res) => {

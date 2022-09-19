@@ -10,8 +10,8 @@ const ProfileImage = ({ image, width = "55px", height = "55px" }) => {
         height: height,
         backgroundImage:
           image && image !== "null"
-            ? `url("${process.env.PUBLIC_URL}/upload/profileImage/${image}")`
-            : `url("${process.env.PUBLIC_URL}/upload/profileImage/basicProfile.png")`,
+            ? `url("${process.env.REACT_APP_UPLOAD_URL}/profileImage/${image}")`
+            : `url("${process.env.REACT_APP_UPLOAD_URL}/profileImage/basicProfile.png")`,
       }}
     ></div>
   );

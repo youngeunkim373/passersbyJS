@@ -41,9 +41,10 @@ const Editor = ({
   const imageHandler = () => {
     //함수에 이미지업로드 input 연결
     const input = document.getElementById("imageUpload");
+    console.log("input", input);
     input.click();
 
-    input.addEventListener("change", async () => {
+    const changeListener = async () => {
       const files = Object.values(input.files);
 
       const formData = new FormData();
@@ -63,36 +64,36 @@ const Editor = ({
       };
 
       axios
-        .put("http://localhost:4000/etc/editorurl", formData, config)
+        .put(
+          `${process.env.REACT_APP_API_ROOT}/etc/editorurl`,
+          formData,
+          config
+        )
         .then((res) => {
           // console.log(res.data);
           const editor = reactQuillRef.current.getEditor(); // 에디터 객체 가져오기
-          const range = editor.getSelection();
-          res.data.map((img) => {
+          const range = editor.getSelection(); //커서 위치
+          const imgs = Object.values(res.data);
+          imgs.map((img) => {
+            // console.log(img);
             editor.insertEmbed(
               range.index,
               "image",
-              `${process.env.PUBLIC_URL}${img}`
+              `${process.env.REACT_APP_UPLOAD_URL}${img}`
             );
           });
+          input.removeEventListener("change", changeListener);
         })
         .catch((error) => console.log(error.response));
-    });
+    };
+
+    input.addEventListener("change", changeListener);
   };
 
   /* -------- 툴바 세팅 --------*/
   const modules = useMemo(() => {
-    return display === "none"
+    return display !== "none"
       ? {
-          toolbar: {
-            container: [
-              ["image"],
-              [{ header: [1, 2, 3, false] }],
-              ["bold", "italic", "underline", "strike", "blockquote"],
-            ],
-          },
-        }
-      : {
           toolbar: {
             container: [
               ["image"],
@@ -104,8 +105,43 @@ const Editor = ({
               image: imageHandler,
             },
           },
+        }
+      : {
+          toolbar: {
+            container: [
+              ["image"],
+              [{ header: [1, 2, 3, false] }],
+              ["bold", "italic", "underline", "strike", "blockquote"],
+            ],
+          },
         };
   }, []);
+
+  // const modules = useMemo(() => {
+  //   return display === "none"
+  //     ? {
+  //         toolbar: {
+  //           container: [
+  //             ["image"],
+  //             [{ header: [1, 2, 3, false] }],
+  //             ["bold", "italic", "underline", "strike", "blockquote"],
+  //           ],
+  //         },
+  //       }
+  //     : {
+  //         toolbar: {
+  //           container: [
+  //             ["image"],
+  //             [{ header: [1, 2, 3, false] }],
+  //             ["bold", "italic", "underline", "strike", "blockquote"],
+  //           ],
+  //           handlers: {
+  //             // 이미지 처리는 우리가 직접 imageHandler라는 함수로 처리할 것이다.
+  //             image: imageHandler,
+  //           },
+  //         },
+  //       };
+  // }, []);
 
   // Editor.modules = {};
   // Editor.modules.toolbar =
@@ -150,7 +186,6 @@ const Editor = ({
   //           image: imageHandler,
   //         },
   //       };
-
   /*
    * Quill editor formats
    * See https://quilljs.com/docs/formats/
@@ -203,6 +238,7 @@ const Editor = ({
         className="none"
         id="imageUpload"
         type="file"
+        name="image"
         multiple="multiple"
         accept="image/*"
       />

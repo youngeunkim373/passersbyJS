@@ -48,7 +48,7 @@ const SignIn = () => {
 
     axios
       .post(
-        "http://localhost:4000/member/signin",
+        `${process.env.REACT_APP_API_ROOT}/member/signin`,
         JSON.stringify({ email, password }),
         config
       )

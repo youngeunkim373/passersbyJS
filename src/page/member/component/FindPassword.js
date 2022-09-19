@@ -30,7 +30,10 @@ const FindPassword = ({ email, setAlert, onTextChange }) => {
     };
 
     axios
-      .get(`http://localhost:4000/member/signin/findpassword/${email}`, {})
+      .get(
+        `${process.env.REACT_APP_API_ROOT}/member/signin/findpassword/${email}`,
+        {}
+      )
       .then((res) => {
         // console.log(res.data[0].checkEmail);
         setDisplay({ display: "block", checkEmail: res.data[0].checkEmail });

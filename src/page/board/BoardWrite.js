@@ -98,6 +98,7 @@ const BoardWrite = () => {
 
   /*---------- 데이터 DB 저장 ----------*/
   const handleSubmit = (e) => {
+    console.log("handleSubmit");
     e.preventDefault();
 
     // var formData = new FormData();
@@ -149,9 +150,8 @@ const BoardWrite = () => {
     };
 
     axios
-      //.post("http://localhost:4000/board/write", formData, config)
       .post(
-        "http://localhost:4000/board/write",
+        `${process.env.REACT_APP_API_ROOT}/board/write`,
         JSON.stringify({ title, writer, content, email }),
         config
       )
@@ -168,7 +168,10 @@ const BoardWrite = () => {
     const email = sessionStorage.getItem("loginEmail");
 
     axios
-      .get(`http://localhost:4000/board/write/deleteimage/${email}`, {})
+      .get(
+        `${process.env.REACT_APP_API_ROOT}/board/write/deleteimage/${email}`,
+        {}
+      )
       .then((res) => {
         // console.log(res.data);
       });
@@ -185,6 +188,7 @@ const BoardWrite = () => {
 
   //새로고침
   useBeforeunload((e) => {
+    console.log("before unload");
     deleteImage();
     e.preventDefault();
   });

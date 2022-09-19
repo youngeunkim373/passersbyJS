@@ -17,17 +17,15 @@ app.listen(PORT, () => {
   console.log(`Check out the app at http://localhost:${PORT}`);
 });
 
-//DB 연결 확인
-// app.get("/api/getUsername", function (req, res, next) {
-//   res.send({ username: os.userInfo().username });
-// });
-
 //데이터 타입 설정
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
-//클라이언트에서 withCredentials가 true로 설정되어 있으면 origin 값을 명확히 명시해야 함
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+//console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV === "development") {
+  //클라이언트에서 withCredentials가 true로 설정되어 있으면 origin 값을 명확히 명시해야 함
+  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+}
 
 // 메일발송 함수
 const transporter = nodemailer.createTransport({
@@ -90,3 +88,20 @@ const etc = require("./page/serverEtc")(
   fs
 );
 app.use("/etc", etc);
+
+/* --------------------------------------------------- */
+/*  build용 path                                       */
+/* --------------------------------------------------- */
+const serveStatic = express.static(path.resolve("../build"), {
+  index: false,
+});
+app.use(serveStatic);
+
+const serveUpload = express.static(path.resolve("./upload"), {
+  index: false,
+});
+app.use("/upload", serveUpload);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve("../build/index.html"));
+});

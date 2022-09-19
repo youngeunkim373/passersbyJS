@@ -30,7 +30,7 @@ const SelectedBoard = ({ selected }) => {
   useEffect(() => {
     async function fetchData() {
       await axios
-        .get(`http://localhost:4000/home/${selected}`, {})
+        .get(`${process.env.REACT_APP_API_ROOT}/home/${selected}`, {})
         .then((res) => {
           // console.log(res.data);
           setBoard(res.data);

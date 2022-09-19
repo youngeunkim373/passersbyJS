@@ -60,7 +60,7 @@ const CreatePw = () => {
 
     axios
       .post(
-        "http://localhost:4000/member/createpw",
+        `${process.env.REACT_APP_API_ROOT}/member/createpw`,
         JSON.stringify({ email, password }),
         config
       )
