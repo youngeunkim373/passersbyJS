@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 //MUI
@@ -62,7 +62,8 @@ const NoticeThread = () => {
   const [alert, setAlert] = useState({ open: false, text: "" });
 
   /*---------- 댓글 조회 ----------*/
-  function fetchData02() {
+  //function fetchData02() {
+  const fetchData02 = useCallback(() => {
     axios
       .get(`${process.env.REACT_APP_API_ROOT}/notice/comment`, {
         params: {
@@ -75,7 +76,7 @@ const NoticeThread = () => {
         setCmntCnt(res.data.cmntCnt);
       })
       .catch((error) => console.log(error.response));
-  }
+  }, [no, page]);
 
   /*---------- 댓글 입력 ----------*/
   const onCmntChange = (e) => {
@@ -151,12 +152,12 @@ const NoticeThread = () => {
     }
 
     fetchData();
-  }, [quillRef]);
+  }, [quillRef, no]);
 
   //댓글 조회
   useEffect(() => {
     fetchData02();
-  }, [page]);
+  }, [page, fetchData02]);
 
   //페이지 처리
   useEffect(() => {
@@ -172,7 +173,7 @@ const NoticeThread = () => {
         .catch((error) => console.log(error.response));
     }
     fetchData03();
-  }, [cmnt]);
+  }, [cmnt, no]);
 
   /*---------- return ----------*/
   return (

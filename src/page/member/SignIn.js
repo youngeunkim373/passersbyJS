@@ -28,7 +28,7 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   /*---------- 로그인 세션 관리 ----------*/
-  const { auth, setAuth } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
 
   /*---------- 데이터 입력 ----------*/
   const onTextChange = (e) => {

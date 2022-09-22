@@ -11,7 +11,7 @@ import AuthContext from "context/AuthProvider";
 
 export default function Menu() {
   /*---------- 로그인 세션 관리 ----------*/
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
 
   /*---------- 반응형 css ----------*/
   const matches = useMediaQuery("(max-width:1250px)");

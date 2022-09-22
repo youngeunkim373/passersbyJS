@@ -8,7 +8,7 @@ const SignOut = () => {
   const navigate = useNavigate();
 
   /*---------- 로그인 세션 관리 ----------*/
-  const { auth, setAuth } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
 
   useEffect(() => {
     sessionStorage.removeItem("loginEmail");
@@ -18,7 +18,7 @@ const SignOut = () => {
 
     //홈으로 페이지 이동
     navigate("/");
-  }, []);
+  }, [navigate, setAuth]);
 
   return <div>로그아웃</div>;
 };

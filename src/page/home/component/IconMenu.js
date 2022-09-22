@@ -54,7 +54,7 @@ const IconMenu = ({ menu, activeStyle }) => {
   });
 
   /*---------- 로그인 세션 관리 ----------*/
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
 
   /*---------- drawer ----------*/
   const toggleDrawer = (anchor, open) => (event) => {

@@ -14,7 +14,7 @@ const Card = ({ backgroundColor, title, icon, line }) => {
     >
       <div className="line-6">
         <h2 className="PB10">{title}</h2>
-        <img src={icon} width="100px" className="PB10" />
+        <img src={icon} alt="category" width="100px" className="PB10" />
         <p className="font-normal PT10">{line}</p>
       </div>
     </Box>

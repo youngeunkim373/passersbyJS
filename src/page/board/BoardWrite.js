@@ -22,7 +22,8 @@ const BoardWrite = () => {
     content: "",
     email: sessionStorage.getItem("loginEmail"),
   });
-  const { title, writer, content } = list;
+  const { title } = list;
+
   const koreanList = {
     title: "제목",
     content: "내용",
@@ -98,28 +99,7 @@ const BoardWrite = () => {
 
   /*---------- 데이터 DB 저장 ----------*/
   const handleSubmit = (e) => {
-    console.log("handleSubmit");
     e.preventDefault();
-
-    // var formData = new FormData();
-    // formData.append("title", list.title);
-    // formData.append("writer", list.writer);
-    // formData.append(
-    //   "content",
-    //   list.content.replaceAll("/upload/temporary/", "/upload/board/")
-    // );
-    // formData.append("email", list.email);
-
-    // const input = document.getElementById("imageUpload");
-    // const files = Object.values(input.files);
-    // Object.values(files).forEach((file) => {
-    //   formData.append("file", file);
-    // });
-
-    // for (let value of formData.values()) {
-    //   console.log(value);
-    // }
-    // return;
 
     const title = list.title;
     const writer = list.writer;

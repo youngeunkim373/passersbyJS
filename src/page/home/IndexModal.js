@@ -13,7 +13,7 @@ const IndexModal = () => {
   const [display, setDisplay] = useState(sessionStorage.getItem("indexModal"));
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       sessionStorage.setItem("indexModal", false);
       setDisplay(sessionStorage.getItem("indexModal"));
     }, 3500);

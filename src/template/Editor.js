@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useCallback } from "react";
 import ReactQuill from "react-quill";
 import axios from "axios";
 import clsx from "clsx";
@@ -23,7 +23,7 @@ const Editor = ({
   Block.className = "MultipleDiv";
   Quill.register(Block, true);
 
-  const attachQuillRefs = () => {
+  const attachQuillRefs = useCallback(() => {
     // Ensure React-Quill reference is available:
     if (typeof reactQuillRef.current.getEditor !== "function") return;
     // Skip if Quill reference is defined:
@@ -35,7 +35,7 @@ const Editor = ({
 
     setQuillRef(quillRef);
     setReactQuillRef(reactQuillRef);
-  };
+  }, [setQuillRef, setReactQuillRef]);
 
   /* -------- 이미지 처리 핸들러 --------*/
   const imageHandler = () => {
@@ -74,14 +74,16 @@ const Editor = ({
           const editor = reactQuillRef.current.getEditor(); // 에디터 객체 가져오기
           const range = editor.getSelection(); //커서 위치
           const imgs = Object.values(res.data);
-          imgs.map((img) => {
+
+          for (var img of imgs) {
             // console.log(img);
             editor.insertEmbed(
               range.index,
               "image",
               `${process.env.REACT_APP_UPLOAD_URL}${img}`
             );
-          });
+          }
+
           input.removeEventListener("change", changeListener);
         })
         .catch((error) => console.log(error.response));
@@ -115,7 +117,7 @@ const Editor = ({
             ],
           },
         };
-  }, []);
+  }, [display]);
 
   // const modules = useMemo(() => {
   //   return display === "none"
@@ -217,7 +219,7 @@ const Editor = ({
 
   useEffect(() => {
     attachQuillRefs();
-  }, [reactQuillRef]);
+  }, [reactQuillRef, attachQuillRefs]);
 
   /* -------- return --------*/
   return (

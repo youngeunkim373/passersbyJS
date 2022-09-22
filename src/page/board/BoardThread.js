@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import ReactQuill from "react-quill";
 //MUI
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -27,9 +26,6 @@ import BoardChart from "./component/BoardChart";
 //util
 import * as CD from "global/util/calcDate";
 import * as AL from "global/util/autoLink";
-
-// Accessing the Quill backing instance using React ref functions
-const Quill = ReactQuill.Quill;
 
 const BoardThread = () => {
   /*---------- URL 파라미터 ----------*/
@@ -72,7 +68,7 @@ const BoardThread = () => {
   const [alert, setAlert] = useState({ open: false, text: "" });
 
   /*---------- 댓글 조회 ----------*/
-  const fetchData02 = () => {
+  const fetchData02 = useCallback(() => {
     axios
       .get(`${process.env.REACT_APP_API_ROOT}/board/comment`, {
         params: {
@@ -85,7 +81,7 @@ const BoardThread = () => {
         setCmntCnt(res.data.cmntCnt);
       })
       .catch((error) => console.log(error.response));
-  };
+  }, [no, page]);
 
   /*---------- 댓글 입력 ----------*/
   const onCmntChange = (e) => {
@@ -96,44 +92,47 @@ const BoardThread = () => {
   };
 
   /*---------- 답변 선택 DB 저장 ----------*/
-  const handleClick = async (e) => {
-    e.preventDefault();
-    let id = e.target.id;
-    let loginEmail = sessionStorage.getItem("loginEmail");
-    // console.log(`id: ${id} / loginEmail: ${loginEmail}`);
+  const handleClick = useCallback(
+    async (e) => {
+      e.preventDefault();
+      let id = e.target.id;
+      let loginEmail = sessionStorage.getItem("loginEmail");
+      // console.log(`id: ${id} / loginEmail: ${loginEmail}`);
 
-    if (loginEmail === null) {
-      setAlert({
-        open: true,
-        text: "답변은 로그인 후에 가능합니다.",
-      });
-      return;
-    }
+      if (loginEmail === null) {
+        setAlert({
+          open: true,
+          text: "답변은 로그인 후에 가능합니다.",
+        });
+        return;
+      }
 
-    await axios
-      .get(`${process.env.REACT_APP_API_ROOT}/board/answer`, {
-        params: {
-          list_no: no,
-          ans_seq: id,
-          user_email: loginEmail,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data);
-        if (res.data[0].checkDup > 0) {
-          setAlert({
-            open: true,
-            text: "이미 답변이 완료된 질문입니다.",
-          });
-        } else {
-          setAlert({
-            open: true,
-            text: "답변이 완료되었습니다",
-          });
-        }
-        setReload(true);
-      });
-  };
+      await axios
+        .get(`${process.env.REACT_APP_API_ROOT}/board/answer`, {
+          params: {
+            list_no: no,
+            ans_seq: id,
+            user_email: loginEmail,
+          },
+        })
+        .then((res) => {
+          // console.log(res.data);
+          if (res.data[0].checkDup > 0) {
+            setAlert({
+              open: true,
+              text: "이미 답변이 완료된 질문입니다.",
+            });
+          } else {
+            setAlert({
+              open: true,
+              text: "답변이 완료되었습니다",
+            });
+          }
+          setReload(true);
+        });
+    },
+    [no]
+  );
 
   /*---------- 댓글 저장 ----------*/
   const handleSubmit = (e) => {
@@ -210,12 +209,12 @@ const BoardThread = () => {
     }
 
     fetchData();
-  }, [quillRef]);
+  }, [handleClick, no, quillRef]);
 
   //댓글 조회
   useEffect(() => {
     fetchData02();
-  }, [page]);
+  }, [fetchData02, page]);
 
   //페이지 처리
   useEffect(() => {
@@ -230,7 +229,7 @@ const BoardThread = () => {
         .catch((error) => console.log(error.response));
     }
     fetchData03();
-  }, [cmnt]);
+  }, [cmnt, no]);
 
   /*---------- return ----------*/
   return (

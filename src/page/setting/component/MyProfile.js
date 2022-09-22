@@ -72,7 +72,7 @@ const MyProfile = () => {
     region: "",
     image: "",
   });
-  const { email, nicknm, sex, age, region } = profile;
+  const { email, nicknm, sex, region } = profile;
 
   const [initNicknm, setInitNicknm] = useState("");
 
@@ -231,7 +231,7 @@ const MyProfile = () => {
       //홈으로 페이지 이동
       navigate("/signin");
     }
-  }, [alert.open]);
+  }, [alert.open, alert.text, navigate]);
 
   /*---------- return ----------*/
   return (

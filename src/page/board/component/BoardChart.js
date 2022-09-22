@@ -43,47 +43,47 @@ const BoardChart = ({ no, reload }) => {
     "아직 답변을 등록하지 않은 질문입니다."
   );
 
-  /*---------- 차트 데이터 array ----------*/
-  const allArr = [["answer", "count"]];
-  const sexArr = [["", "여성", "남성"]];
-  const ageArr = [
-    [
-      "",
-      "10세 미만",
-      "10대",
-      "20대",
-      "30대",
-      "40대",
-      "50대",
-      "60대",
-      "70대",
-      "80대",
-      "90대",
-      "100세 이상",
-    ],
-  ];
-  const regionArr = [
-    [
-      "",
-      "서울특별시",
-      "경기도",
-      "광주광역시",
-      "대구광역시",
-      "대전광역시",
-      "부산광역시",
-      "인천광역시",
-      "울산광역시",
-      "세종특별자치시",
-      "제주특별자치도",
-      "강원도",
-      "경상도",
-      "전라도",
-      "충청도",
-    ],
-  ];
-
   /*---------- useEffect ----------*/
   useEffect(() => {
+    //차트 데이터 array
+    const allArr = [["answer", "count"]];
+    const sexArr = [["", "여성", "남성"]];
+    const ageArr = [
+      [
+        "",
+        "10세 미만",
+        "10대",
+        "20대",
+        "30대",
+        "40대",
+        "50대",
+        "60대",
+        "70대",
+        "80대",
+        "90대",
+        "100세 이상",
+      ],
+    ];
+    const regionArr = [
+      [
+        "",
+        "서울특별시",
+        "경기도",
+        "광주광역시",
+        "대구광역시",
+        "대전광역시",
+        "부산광역시",
+        "인천광역시",
+        "울산광역시",
+        "세종특별자치시",
+        "제주특별자치도",
+        "강원도",
+        "경상도",
+        "전라도",
+        "충청도",
+      ],
+    ];
+
     async function fetchData() {
       await axios
         .get(
@@ -99,7 +99,7 @@ const BoardChart = ({ no, reload }) => {
             setMyAnswer(res.data.myAnswer);
           }
 
-          res.data.data.map((el, idx) => {
+          for (var el of res.data.data) {
             tot_ans_sel_cnt += Number(el.ans_sel_cnt);
 
             allArr.push([String(el.ans_ctnt), Number(el.ans_sel_cnt)]);
@@ -139,7 +139,8 @@ const BoardChart = ({ no, reload }) => {
               Number(el.user_region_jeolla),
               Number(el.user_region_chungcheong),
             ]);
-          });
+          }
+          //});
           setAll(allArr);
           setSex(sexArr);
           setAge(ageArr);
@@ -149,7 +150,7 @@ const BoardChart = ({ no, reload }) => {
         .catch((error) => console.log(error.response));
     }
     fetchData();
-  }, [reload]);
+  }, [no, reload]);
 
   return (
     <Accordion

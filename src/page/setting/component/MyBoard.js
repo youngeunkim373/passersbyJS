@@ -66,7 +66,7 @@ function BoardTable({ title, url }) {
     }
 
     fetchData();
-  }, [search, page]);
+  }, [search, page, url]);
 
   //페이지 처리
   useEffect(() => {
@@ -91,7 +91,7 @@ function BoardTable({ title, url }) {
     }
 
     fetchData();
-  }, [search]);
+  }, [search, url]);
 
   /*---------- return ----------*/
   return (

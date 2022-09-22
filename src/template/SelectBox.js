@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "@emotion/styled";
 //style
 import "./style/template.css";
 

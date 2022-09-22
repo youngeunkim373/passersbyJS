@@ -24,10 +24,10 @@ const FindPassword = ({ email, setAlert, onTextChange }) => {
       return;
     }
 
-    const config = {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    };
+    // const config = {
+    //   headers: { "Content-Type": "application/json" },
+    //   withCredentials: true,
+    // };
 
     axios
       .get(

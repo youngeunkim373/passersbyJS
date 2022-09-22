@@ -39,7 +39,7 @@ const FindUser = ({ popup, setPopup }) => {
     email: "",
     password: "",
   });
-  const { email, password } = state;
+  const { email } = state;
 
   /*---------- Alert창 처리 ----------*/
   const [alert, setAlert] = useState({ open: false, text: "" });
