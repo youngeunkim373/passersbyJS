@@ -1,10 +1,10 @@
 const mariaDB = require("mysql");
 
 const conn = mariaDB.createConnection({
-  host: "localhost",
+  host: "pscale-proxy",
   port: 3306,
   user: "root",
-  password: "apm6311",
+  //password: "apm6311",
   database: "passersby",
 });
 
